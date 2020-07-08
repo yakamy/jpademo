@@ -1,7 +1,9 @@
 package com.yakamy.jpademo.controller;
 
+import com.google.common.collect.Lists;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.yakamy.jpademo.entity.Dept;
+import com.yakamy.jpademo.entity.QDept;
 import com.yakamy.jpademo.entity.QUser;
 import com.yakamy.jpademo.entity.User;
 import com.yakamy.jpademo.repository.DeptRepo;
@@ -55,5 +57,19 @@ public class BaseController {
                                           .where(qUser.name.eq(user.getName()))
                                           .fetch();
         return fetch;
+    }
+
+    @PostMapping("/dept/search")
+    public List<Dept> deptSearch(@RequestBody Dept dept) {
+        QDept qDept = QDept.dept;
+
+        Iterable<Dept> all = deptRepo.findAll(qDept.name.eq(dept.getName()));
+
+        /**
+         * BooleanBuilder builder = new BooleanBuilder();
+         * builder.and(qDept.name.eq(dept.getName()));
+         * deptRepo.findAll(builder);
+         */
+        return Lists.newArrayList(all);
     }
 }
