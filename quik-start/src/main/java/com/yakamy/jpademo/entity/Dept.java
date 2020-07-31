@@ -13,7 +13,7 @@ import java.sql.Timestamp;
  */
 @Entity
 @Data
-public class Dept {
+public class Dept extends AbstractEntity<Long> {
 
     @Id
     private Long id;
